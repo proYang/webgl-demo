@@ -1,0 +1,11 @@
+body {
+    --main-width: 800px;
+    --main-height: 600px;
+    --main-border: 1px solid #acf;
+}
+
+.webgl {
+    width: var(--main-width);
+    height: var(--main-height);
+    border: var(--main-border);
+}
