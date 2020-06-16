@@ -1,13 +1,6 @@
 
-const canvas = document.querySelector('.webgl');
+import { initShaders, createProgram } from '../../utils/common'
 
-const gl = canvas.getContext('webgl');
-
-// 设置背景色
-gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
-// 清除颜色缓冲区
-gl.clear(gl.COLOR_BUFFER_BIT);
 
 // 顶点着色器
 const VSHADER_SOURCE = `
@@ -24,18 +17,24 @@ void main() {
 }
 `
 
-const loadShader = (gl, type, source) => {
-    const shader = gl.createShader(type);
+function main() {
+    const canvas = document.querySelector('.webgl');
 
-    gl.shaderSource(shader, source);
+    const gl = canvas.getContext('webgl');
 
-    gl.compileShader(shader);
+    if(!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
+        console.log('初始化着色器失败');
+        return;
+    }
 
-    gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+    // 设置背景色
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
-    return shader;
+    // 清除颜色缓冲区
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
+    // 绘制点
+    gl.drawArrays(gl.POINTS, 0, 1);
 }
 
-
-loadShader(gl, VSHADER_SOURCE, FSHADER_SOURCE);
+main();
